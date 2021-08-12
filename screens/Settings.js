@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, SectionList } from 'react-native';
+//import IconAntDesign from 'react-native-vector-icons/AntDesign';
+//import {Icon} from 'react-native-elements'
 
-import { ListItem, Divider, SearchBar } from 'react-native-elements';
+import { ListItem, Divider, SearchBar, Header, Icon  } from 'react-native-elements';
 
 const ORANGE = '#FF9500';
 const BLUE = '#007AFF';
@@ -13,54 +15,67 @@ const TEAL_BLUE = '#5AC8FA';
 
 const sections = [
     {
+        
         data: [
+
             {
-                title: 'Airplane Mode',
-                icon: 'ios-airplane',
+                title: '   Mode',
+                icon: 'sound',
                 backgroundColor: ORANGE,
+               
+                
+            },
+               
+            {
+                title: '   Neckband',
+                icon: 'ios-bluetooth',
+                backgroundColor: BLUE,
                 hideChevron: true,
                 checkbox: true,
             },
             {
-                title: 'Wi-Fi',
-                backgroundColor: BLUE,
-                icon: 'ios-wifi',
-            },
-            {
-                title: 'Bluetooth',
+                title: '   Hearing aids',
                 backgroundColor: BLUE,
                 icon: 'ios-bluetooth',
+                hideChevron: true,
+                checkbox: true,
+            },
+            {
+                title: '   Vibrations',
+                backgroundColor: GREEN,
+                icon: 'ios-radio',
                 //rightTitle: 'Off',
                 hideChevron: true,
                 checkbox: true,
             },
             {
-                title: 'Cellular',
+                title: '   Vibration intensity',
                 backgroundColor: GREEN,
                 icon: 'ios-phone-portrait',
             },
             {
-                title: 'Personal Hotspot',
-                backgroundColor: GREEN,
+                title: '   Sensor sensitivity',
+                backgroundColor: TEAL_BLUE,
                 icon: 'ios-radio',
-                rightTitle: 'Off',
+                
             },
         ],
     },
     {
         data: [
             {
-                title: 'Notifications',
-                icon: 'ios-notifications',
-                backgroundColor: RED,
+                title: '   Vibrate when name is spoken',
+                icon: 'ios-radio',
+                backgroundColor: GREEN,
+                rightTitle: 'Off'
             },
             {
-                title: 'Control Center',
+                title: '   Train with customized voices',
                 backgroundColor: GREY,
                 icon: 'ios-switch',
             },
             {
-                title: 'Do Not Disturb',
+                title: '   Do Not Disturb',
                 backgroundColor: PURPLE,
                 icon: 'ios-moon',
             },
@@ -69,42 +84,24 @@ const sections = [
     {
         data: [
             {
-                title: 'General',
+                title: '   General',
                 icon: 'ios-settings',
                 backgroundColor: GREY,
             },
             {
-                title: 'Display & Brightness',
+                title: '   Display & Brightness',
                 backgroundColor: BLUE,
                 icon: 'ios-bulb',
             },
+            
             {
-                title: 'Wallpaper',
-                backgroundColor: TEAL_BLUE,
-                icon: 'ios-color-wand',
-            },
-            {
-                title: 'Sounds',
+                title: '   Sounds',
                 backgroundColor: RED,
                 icon: 'ios-volume-high',
             },
+           
             {
-                title: 'Touch ID & Code',
-                backgroundColor: RED,
-                icon: 'ios-finger-print',
-            },
-            {
-                title: 'Emergency Call',
-                backgroundColor: ORANGE,
-                icon: 'ios-medical',
-            },
-            {
-                title: 'Battery',
-                backgroundColor: GREEN,
-                icon: 'ios-battery-full',
-            },
-            {
-                title: 'Confidentiality',
+                title: '   Confidentiality',
                 backgroundColor: GREY,
                 icon: 'ios-hand',
             },
@@ -114,10 +111,13 @@ const sections = [
     { data: [] },
 ];
 
+
 export default class Settings extends React.PureComponent {
     renderItem = ({
         item: { title, backgroundColor, icon, rightTitle, hideChevron, checkbox },
+        
     }) => (
+
             <ListItem
                 containerStyle={{ paddingVertical: 8 }}
                 switch={checkbox && { value: true }}
@@ -140,9 +140,11 @@ export default class Settings extends React.PureComponent {
                 }}
                 title={title}
             />
+            
         );
 
     renderSectionHeader = () => <View style={styles.headerSection} />;
+
 
     ItemSeparatorComponent = () => (
         <View style={styles.separatorComponent}>
@@ -160,21 +162,40 @@ export default class Settings extends React.PureComponent {
     keyExtractor = (item, index) => index;
 
     render() {
+      
         return (
-            <SectionList
-                keyExtractor={this.keyExtractor}
-                ListHeaderComponent={this.ListHeaderComponent}
-                contentContainerStyle={styles.containerStyle}
-                sections={sections}
-                renderItem={this.renderItem}
-                renderSectionHeader={this.renderSectionHeader}
-                ItemSeparatorComponent={this.ItemSeparatorComponent}
-                SectionSeparatorComponent={Divider}
-                stickySectionHeadersEnabled={false}
-            />
+            <View>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content"
+                    leftComponent={<Icon name="menu" onPress={() => this.props.navigation.openDrawer()} />}
+                    centerComponent={{ text: 'Settings', style: { color: '#fff' } }}
+                    rightComponent={<Icon name= "settings"/>}
+                    containerStyle={{
+                        backgroundColor: '#3D6DCC',
+                        justifyContent: 'space-around',
+                    }}
+                />
+
+                <SectionList
+                    keyExtractor={this.keyExtractor}
+                    ListHeaderComponent={this.ListHeaderComponent}
+                    contentContainerStyle={styles.containerStyle}
+                    sections={sections}
+                    renderItem={this.renderItem}
+                    renderSectionHeader={this.renderSectionHeader}
+                    ItemSeparatorComponent={this.ItemSeparatorComponent}
+                    SectionSeparatorComponent={Divider}
+                    stickySectionHeadersEnabled={false}
+                />
+            </View>
+
         );
     }
 }
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -190,3 +211,4 @@ const styles = StyleSheet.create({
         height: 30,
     },
 });
+
